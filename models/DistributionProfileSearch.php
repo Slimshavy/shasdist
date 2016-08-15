@@ -1,0 +1,85 @@
+<?php
+
+namespace app\models;
+
+use Yii;
+use yii\base\Model;
+use yii\data\ActiveDataProvider;
+use app\models\DistributionProfile;
+
+/**
+ * DistributionProfileSearch represents the model behind the search form about `app\models\DistributionProfile`.
+ */
+class DistributionProfileSearch extends DistributionProfile
+{
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['id', 'multiplier', 'creatoruserid', 'lastupdateuserid'], 'integer'],
+            [['profilename', 'header', 'description', 'starttime', 'endtime', 'actualendtime', 'profilephoto', 'createdate', 'lastupdatedate'], 'safe'],
+            [['finishbeforemultiplying', 'requireconfirmation'], 'boolean'],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function scenarios()
+    {
+        // bypass scenarios() implementation in the parent class
+        return Model::scenarios();
+    }
+
+    /**
+     * Creates data provider instance with search query applied
+     *
+     * @param array $params
+     *
+     * @return ActiveDataProvider
+     */
+    public function search($params, $public = false)
+    {
+        $query = DistributionProfile::find();
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate() || (Yii::$app->user->isGuest && !$public)) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            $query->where('0=1');
+            return $dataProvider;
+        }
+
+	if($public)
+    	{	
+	    $query->orFilterWhere(['ispublic' => 1,]);
+    	}
+	else if(!Yii::$app->user->identity->isAdmin())
+	{
+	    $query->orFilterWhere([
+                'creatoruserid' => Yii::$app->user->id,
+                'lastupdateuserid' => Yii::$app->user->id,
+            ]);
+	}
+
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'starttime' => $this->starttime,
+            'endtime' => $this->endtime,
+            'createdate' => $this->createdate,
+            'lastupdatedate' => $this->lastupdatedate,
+        ]);
+
+        $query->andFilterWhere(['like', 'profilename', $this->profilename]);
+        $query->andFilterWhere(['like', 'header', $this->header]);
+        $query->andFilterWhere(['like', 'description', $this->description]);
+
+        return $dataProvider;
+    }
+}

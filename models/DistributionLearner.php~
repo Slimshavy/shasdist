@@ -1,0 +1,140 @@
+<?php
+
+namespace app\models;
+
+use Yii;
+
+/**
+ * This is the model class for table "distributionlearners".
+ *
+ * @property integer $id
+ * @property integer $userid
+ * @property integer $distributionprofileid
+ * @property integer $creatoruserid
+ * @property integer $mesechtaid
+ * @property integer $completenumber
+ * @property string $createdate
+ * @property string $lastupdatedate
+ * @property integer $lastupdateuserid
+ * @property string $endtime
+ *
+ * @property Users $user
+ * @property Distributionprofile $distributionprofile
+ * @property Users $creatoruser
+ * @property Users $creatoruser0
+ * @property Users $lastupdateuser
+ */
+class DistributionLearner extends \yii\db\ActiveRecord
+{
+    /**
+     * @inheritdoc
+     */
+    public static function tableName()
+    {
+        return 'distributionlearners';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['userid', 'distributionprofileid', 'creatoruserid', 'mesechtaid', 'completenumber', 'lastupdateuserid'], 'integer'],
+            [['distributionprofileid', 'creatoruserid', 'mesechtaid', 'completenumber', 'createdate', 'lastupdatedate', 'lastupdateuserid'], 'required'],
+            [['createdate', 'lastupdatedate', 'endtime'], 'safe']
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'userid' => 'Userid',
+            'distributionprofileid' => 'Distributionprofileid',
+            'creatoruserid' => 'Creatoruserid',
+            'mesechtaid' => 'Mesechtaid',
+            'completenumber' => 'Completenumber',
+            'createdate' => 'Createdate',
+            'lastupdatedate' => 'Lastupdatedate',
+            'lastupdateuserid' => 'Lastupdateuserid',
+            'endtime' => 'Endtime',
+	    'userFullName' => 'Learner Name',
+        ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'userid']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDistributionprofile()
+    {
+        return $this->hasOne(DistributionProfile::className(), ['id' => 'distributionprofileid']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCreatoruser()
+    {
+        return $this->hasOne(Users::className(), ['id' => 'creatoruserid']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCreatoruser0()
+    {
+        return $this->hasOne(User::className(), ['id' => 'creatoruserid']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getLastupdateuser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'lastupdateuserid']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMesechta()
+    {
+        return $this->hasOne(Mesechta::className(), ['id' => 'mesechtaid']);
+    }
+
+    public function getMesechtaEnglishName()
+    {
+        return $this->mesechta->nameenglish;
+    }
+
+    public function getMesechtaDafCount()
+    {
+        return $this->mesechta->dafcount;
+    }
+
+    public function getUserFullName()
+    {
+        return isset($this->user) ? $this->user->lastname.', '.$this->user->firstname : 'None';
+    }
+
+    /**
+     * @inheritdoc
+     * @return DistributionLearnerQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new DistributionLearnerQuery(get_called_class());
+    }
+}
