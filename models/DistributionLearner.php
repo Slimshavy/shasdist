@@ -63,6 +63,11 @@ class DistributionLearner extends \yii\db\ActiveRecord
             'lastupdateuserid' => 'Lastupdateuserid',
             'endtime' => 'Endtime',
 	    'userFullName' => 'Learner Name',
+	    'mesechtaEnglishName' => 'Mesechta (English)',
+	    'mesechtaHebreName' => 'Mesechta (Hebrew)',
+            'mesechtaDafCount' => 'Daf Count',
+            'mesechtaWordCount' => 'Word Count',
+            'mesechtaLetterCount' => 'Letter Count',
         ];
     }
 
@@ -119,14 +124,29 @@ class DistributionLearner extends \yii\db\ActiveRecord
         return $this->mesechta->nameenglish;
     }
 
+    public function getMesechtaHebrewName()
+    {
+        return $this->mesechta->namehebrew;
+    }
+
+    public function getMesechtaWordCount()
+    {
+        return $this->mesechta->wordcount;
+    }
+
     public function getMesechtaDafCount()
     {
         return $this->mesechta->dafcount;
     }
 
+    public function getMesechtaLetterCount()
+    {
+        return $this->mesechta->lettercount;
+    }
+
     public function getUserFullName()
     {
-        return isset($this->user) ? $this->user->lastname.', '.$this->user->firstname : 'None';
+        return isset($this->user) ? ucfirst($this->user->firstname).' '.ucfirst($this->user->lastname) : 'None';
     }
 
     /**

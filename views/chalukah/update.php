@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $model app\models\DistributionProfile */
 
 $this->title = 'Update Distribution Profile: ' . ' ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Distribution Profiles', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Chalukah Profiles', 'url' => (Yii::$app->user->isGuest ? ['list'] : ['profiles'])];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = 'Update';
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?= $this->render('_profileform', [
+    <?= $this->render('_form', [
         'model' => $model,
     ]) ?>
 

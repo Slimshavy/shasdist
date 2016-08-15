@@ -20,7 +20,6 @@ $this->params['breadcrumbs'][] = $profile->header;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
             [
 		'class' => 'yii\grid\ActionColumn',
 		'header' => 'Learner',
@@ -37,10 +36,12 @@ $this->params['breadcrumbs'][] = $profile->header;
 		
 	    ],
             'mesechtaEnglishName',
+	    'mesechtaHebrewName',
             'mesechtaDafCount',
-
+            'mesechtaWordCount',
+            'mesechtaLetterCount',
             [
-		'visible' => !Yii::$app->user->isGuest,
+		'visible' => false,//!Yii::$app->user->isGuest,
 		'class' => 'yii\grid\ActionColumn',
 		'buttons' => 
 		[

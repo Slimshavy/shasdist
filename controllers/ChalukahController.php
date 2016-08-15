@@ -24,7 +24,7 @@ class ChalukahController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-		'except' => ['list','select','confirm','selected'],
+		'except' => ['list','select','confirmation','selected'],
                 'rules' => [
                     [
                         'actions' => ['index'],
@@ -32,21 +32,15 @@ class ChalukahController extends Controller
                         'roles' => ['?'],
 		    ],
                     [
-                        'actions' => ['profiles','view','update','delete','create'],
-                        'allow' => false,
-                        'roles' => ['?'],
-                    ],
-                    [
-                        'actions' => ['profiles','index','view','update','delete','create'],
+                        'actions' => ['profiles','index','delete','view','update','create'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
+                    [
+                        'actions' => ['profiles','view','delete','update','create'],
+                        'allow' => false,
+                        'roles' => ['?'],
+                    ],
                 ],
             ],
         ];
@@ -59,6 +53,10 @@ class ChalukahController extends Controller
     public function actionIndex($profilename)
     {
 	$profile = DistributionProfile::find()->where(['profilename' => $profilename])->one();
+
+	if(!$profile)
+	    return $this->redirect(Array('/chalukah/list'));
+
         $searchModel = new DistributionLearnerSearch();
         $dataProvider = $searchModel->search($profile->id, Yii::$app->request->queryParams);
 
@@ -75,6 +73,9 @@ class ChalukahController extends Controller
      */
     public function actionProfiles()
     {
+	if(Yii::$app->user->isGuest)
+	    return $this->redirect(Array('/chalukah/list'));
+
         $searchModel = new DistributionProfileSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, false);
 
@@ -142,7 +143,7 @@ class ChalukahController extends Controller
 
     	if($model->userid)
     	{
-	    return $this->redirect(['selected', 'id' => $model->id]);
+	    return $this->render('selected', array('model'=>$model, 'user'=>$user));
     	}
 
 	if(!$user->load(Yii::$app->request->post()) && Yii::$app->user->isGuest)
@@ -163,7 +164,7 @@ class ChalukahController extends Controller
 	    }
 	    else
 	    {
-		return $this->redirect(['selected', 'id' => $model->id]);
+		return $this->render('selected', array('model'=>$model, 'user'=>$user));
 	    }
 	}
 	else
@@ -173,30 +174,12 @@ class ChalukahController extends Controller
 
         if ($model->userid && $model->save()) 
 	{
-	    return $this->redirect(['confirmation', 'id' => $model->id]);
+	    return $this->render('confirmation', array('model'=>$model, 'user'=>$user));
         } 
 	else 
 	{
-	    return $this->redirect(['selected', 'id' => $model->id]);
+	    return $this->render('selected', array('model'=>$model, 'user'=>$user));
         }
-    }
-
-    public function actionConfirmation($id)
-    {
-	print "confirmed\n";
-
-        $model = $this->findDistributionLearner($id);
-
-	print_r($model);
-    }
-
-    public function actionSelected($id)
-    {
-	print "Sorry, the mesechta you chose was just taken.\n";
-
-        $model = $this->findDistributionLearner($id);
-
-	print_r($model);
     }
 
     /**
@@ -225,9 +208,9 @@ class ChalukahController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findDistributionLearner($id)->delete();
+        $this->findDistributionProfile($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['profiles']);
     }
 
     /**

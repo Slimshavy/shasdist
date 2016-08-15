@@ -21,6 +21,11 @@ class DistributionLearnerSearch extends DistributionLearner
     public function rules()
     {
         return [
+            //[['userid', 'distributionprofileid', 'creatoruserid', 'mesechtaid', 'completenumber', 'lastupdateuserid'], 'integer'],
+            //[['distributionprofileid', 'creatoruserid', 'mesechtaid', 'completenumber', 'createdate', 'lastupdatedate', 'lastupdateuserid'], 'required'],
+            //[['createdate', 'lastupdatedate', 'endtime'], 'safe'],
+
+            //[['mesechtaDafCount','mesechtaWordCount','mesechtaLetterCount'], 'integer'],
             [['mesechtaDafCount'], 'integer'],
             [['mesechtaEnglishName'], 'safe'],
         ];
@@ -55,19 +60,35 @@ class DistributionLearnerSearch extends DistributionLearner
             		'mesechtaEnglishName' => [
                 		'asc' => ['mesechtos.nameenglish' => SORT_ASC],
                 		'desc' => ['mesechtos.nameenglish' => SORT_DESC],
-                		'label' => 'Mesechta'
             		],
 			'mesechtaDafCount' => [
                 		'asc' => ['mesechtos.dafcount' => SORT_ASC],
                 		'desc' => ['mesechtos.dafcount' => SORT_DESC],
-                		'label' => 'Daf Count'
+            		],
+			'mesechtaWordCount' => [
+                		'asc' => ['mesechtos.wordcount' => SORT_ASC],
+                		'desc' => ['mesechtos.wordcount' => SORT_DESC],
+            		],
+			'mesechtaLetterCount' => [
+                		'asc' => ['mesechtos.lettercount' => SORT_ASC],
+                		'desc' => ['mesechtos.lettercount' => SORT_DESC],
             		]
 		]
     	]);
 
-	$query->joinWith(['user']);
+        $query->andFilterWhere(['distributionprofileid' => $profileid]);
 
-        if (!($this->load($params) && $this->validate())) {
+	$query->joinWith(['user']);
+//unset($params['profilename']);
+	$validated = $this->validate();
+	$loaded = $this->load($params);
+
+//print "<br/><br/><br/> validated='$validated' <br> loaded='$loaded'<br/>";
+//print_r($params);
+//print '<br/>';
+//print_r($this->getErrors());
+        if (!($validated && $loaded)) {
+//print '<br/> passed';
 		$query->joinWith(['mesechta']);
         	return $dataProvider;
         }
@@ -75,9 +96,6 @@ class DistributionLearnerSearch extends DistributionLearner
 	$query->joinWith(['mesechta' => function ($q) {
 		$q->where('mesechtos.nameenglish LIKE "%' . $this->mesechtaEnglishName . '%" AND mesechtos.dafcount = ' . $this->mesechtaDafCount);
 	}]);
-
-
-        $query->andFilterWhere(['distributionprofileid' => $profileid]);
 
         $query->andFilterWhere([
             'id' => $this->id,

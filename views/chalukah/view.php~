@@ -35,6 +35,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'starttime',
             'endtime',
             'actualendtime',
+            'multiplier',
+            'finishbeforemultiplying:boolean',
             'requireconfirmation:boolean',
             'profilephoto',
             'creatoruserid',

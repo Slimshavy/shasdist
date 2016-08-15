@@ -22,10 +22,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'endtime')->textInput() ?>
 
-    <?= $form->field($model, 'multiplier')->textInput() ?>
-
-    <?= $form->field($model, 'finishbeforemultiplying')->checkbox() ?>
-
     <?= $form->field($model, 'requireconfirmation')->checkbox() ?>
 
     <?= $form->field($model, 'ispublic')->checkbox() ?>

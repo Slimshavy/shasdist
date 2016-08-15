@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use yii\widgets\ListView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\DistributionProfileSearch */
@@ -19,17 +19,21 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Create Chalukah Profile', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?= GridView::widget([
+    <?= ListView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'profilename',
-            'header',
-            'description',
-            'starttime',
+	'options' => [
+		'tag' => 'div',
+		'class' => 'profiles-wrapper',
+		'id' => 'profiles-wrapper',
+	],
+	'layout' => "{items} ",
+	'itemView' => '_profile_item',
+        //'filterModel' => $searchModel,
+        //'columns' => [
+          //  'profilename',
+            //'header',
+            //'description',
+            //'starttime',
             // 'endtime',
             // 'actualendtime',
             // 'multiplier',
@@ -41,18 +45,50 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'lastupdatedate',
             // 'lastupdateuserid',
 
-	    [
-		'class' => 'yii\grid\ActionColumn',
-		'buttons' => 
-		[
-		    'view' => function ($url, $model, $key) {
-        		return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', 
-			    'index?profilename='.$model->profilename, 
-			    ['title' => Yii::t('app', 'View'),]);
-    		    },
-		],
-	    ],
-        ],
+	    //[
+	//	'class' => 'yii\grid\ActionColumn',
+	//	'buttons' => 
+	//	[
+	//	    'view' => function ($url, $model, $key) {
+        //		return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', 
+	//		    'index?profilename='.$model->profilename, 
+	//		    ['title' => Yii::t('app', 'View'),]);
+    	//	    },
+	//	],
+	//    ],
+        //],
     ]); ?>
 
 </div>
+<style>
+    .profile-item
+    {
+	color:gray;
+	display:block;
+	padding-bottom:30px;
+	height:100%;
+    }
+    .profile-header a
+    {
+	color:gray;
+	text-decoration:none;
+    }
+    .profile-content-wrapper
+    {
+	display: inline-block;
+	margin-left:20px;
+    }
+    .profile-item img
+    {
+	vertical-align:top;
+    }
+    .profile-item h3
+    {
+	margin:0;
+    }
+    .profile-details span
+    {
+	margin-right:20px;
+    }
+</style>
+

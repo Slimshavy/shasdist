@@ -44,7 +44,7 @@ class DistributionProfile extends \yii\db\ActiveRecord
         return [
             [['header', 'description', 'starttime', 'endtime'], 'required'],
 	    [['profilename'],'match', 'pattern' => '/^[a-zA-Z0-9-]*$/','message' => "Please use valid charchters. (e.g. 'my-chalukas-shas')"],
-            [['starttime', 'endtime', 'actualendtime', 'createdate', 'lastupdatedate'], 'safe'],
+            [['starttime', 'endtime', 'actualendtime', 'createdate', 'lastupdatedate','ispublic'], 'safe'],
             [['multiplier', 'creatoruserid', 'lastupdateuserid'], 'integer'],
             [['finishbeforemultiplying', 'requireconfirmation'], 'boolean'],
             [['profilename', 'header', 'profilephoto'], 'string', 'max' => 128],
@@ -68,12 +68,13 @@ class DistributionProfile extends \yii\db\ActiveRecord
             'actualendtime' => 'Actualendtime',
             'multiplier' => 'Multiplier',
             'finishbeforemultiplying' => 'Finishbeforemultiplying',
-            'requireconfirmation' => 'Requireconfirmation',
+            'requireconfirmation' => 'Require confirmation for Learners',
             'profilephoto' => 'Profilephoto',
             'creatoruserid' => 'Creatoruserid',
             'createdate' => 'Createdate',
             'lastupdatedate' => 'Lastupdatedate',
             'lastupdateuserid' => 'Lastupdateuserid',
+	    'ispublic' => 'Make this profile public',
         ];
     }
 
@@ -110,7 +111,7 @@ class DistributionProfile extends \yii\db\ActiveRecord
 		$this->createdate = date('Y-m-d H:i:s', time());
 		$this->lastupdatedate = date('Y-m-d H:i:s', time());
 		$this->lastupdateuserid = Yii::$app->user->id;
-
+		$this->multiplier = 1;
 		if(!isset($this->profilename) || empty($this->profilename))
 		    $this->profilename = Yii::$app->getSecurity()->generateRandomString(10);
 
@@ -127,11 +128,12 @@ class DistributionProfile extends \yii\db\ActiveRecord
         parent::afterSave($insert, $changedAttributes);
         
 	//for ($x = 1; $x <= $this->multiplier; $x++) 
-	//{
+	if($insert)	
+	{
 	    $sql = "INSERT INTO distributionlearners (distributionprofileid, creatoruserid, mesechtaid, createdate, lastupdatedate, lastupdateuserid, completenumber) 
 		(SELECT ".$this->id.",".Yii::$app->user->id.", id, now(), now(), ".Yii::$app->user->id.",1 FROM mesechtos);";
 
 	    $res = Yii::$app->db->createCommand($sql)->execute();
-	//}
+	}
     }
 }

@@ -1,0 +1,18 @@
+<?php
+
+use yii\helpers\Html;
+
+/* @var $this yii\web\View */
+/* @var $model app\models\DistributionProfile */
+
+$this->title = 'Selection Error';
+$this->params['breadcrumbs'][] = ['label' => 'Chalukah Profiles', 'url' => (Yii::$app->user->isGuest ? ['list'] : ['profiles'])];
+$this->params['breadcrumbs'][] = ['label' => $model->distributionprofile->header, 'url' => ['index','profilename'=>$model->distributionprofile->profilename]];
+$this->params['breadcrumbs'][] = $this->title ;
+?>
+<div class="distribution-profile-selected">
+
+    <h1><?= $this->title ?></h1>
+    <h3>Sorry, <?= ucfirst($model->user->firstname) ?>! Mesechtos <?= $model->mesechtaEnglishName ?> is already taken. Please return to <?= Html::a($model->distributionprofile->header,['index','profilename'=>$model->distributionprofile->profilename]) ?> profile page. <br/></br>Thank You!
+
+</div>

@@ -14,13 +14,12 @@ $this->params['breadcrumbs'][] = $profile->header;
 <div class="distribution-learner-index">
 
     <h1><?= $profile->header ?></h1>
-    <h1><?= $profile->description ?></h3>
+    <h3><?= $profile->description ?></h3>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
             [
 		'class' => 'yii\grid\ActionColumn',
 		'header' => 'Learner',
@@ -37,10 +36,12 @@ $this->params['breadcrumbs'][] = $profile->header;
 		
 	    ],
             'mesechtaEnglishName',
+	    'mesechtaHebrewName',
             'mesechtaDafCount',
-
+            'mesechtaWordCount',
+            'mesechtaLetterCount',
             [
-		'visible' => !Yii::$app->user->isGuest,
+		'visible' => false,//!Yii::$app->user->isGuest,
 		'class' => 'yii\grid\ActionColumn',
 		'buttons' => 
 		[

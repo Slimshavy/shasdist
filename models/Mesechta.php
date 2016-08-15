@@ -43,9 +43,13 @@ class Mesechta extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'nameenglish' => 'English Name',
-            'namehebrew' => 'Hebrew Name',
+            'nameenglish' => 'English Mesechta',
+            'namehebrew' => 'Hebrew Mesechta',
             'dafcount' => 'Daf Count',
+	    'lettercount' => 'Letter Count', 
+	    'wordcount' => 'Word Count', 
+	    'avglettersperdaf' => 'Average Letter Per Daf', 
+	    'avgwordsperdaf' => 'Average Words Per Daf',
         ];
     }
 

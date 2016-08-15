@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /* @var $model app\models\DistributionProfile */
 
 $this->title = 'Create Chalukah Profile';
-$this->params['breadcrumbs'][] = ['label' => 'Chalukah Profiles', 'url' => Yii::$app->user->isGuest ? ['list'] : ['profiles']];
+$this->params['breadcrumbs'][] = ['label' => 'Chalukah Profiles', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="distribution-profile-create">
