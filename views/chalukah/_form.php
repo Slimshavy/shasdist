@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\jui\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\DistributionProfile */
@@ -9,6 +10,8 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="distribution-profile-form">
+
+    <?= DatePicker::widget(['model'=>$model,'attribute'=>'endtime','clientOptions'=>['dateFormat'=>'Y-m-d']]) ?>
 
     <?php $form = ActiveForm::begin(); ?>
 

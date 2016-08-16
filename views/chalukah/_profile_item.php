@@ -2,6 +2,7 @@
 // _list_item.php
 use yii\helpers\Html;
 use yii\helpers\Url;
+use app\models\User;
 ?>
 
 <article class="profile-item">
@@ -17,5 +18,8 @@ use yii\helpers\Url;
 	    <span><b>Start Date: </b><?= date_format(new DateTime($model->starttime),'m/d/Y') ?></span>
 	    <span><b class='profile-end'>End Date: </b><?= date_format(new DateTime($model->endtime),'m/d/Y') ?></span>
 	</div>
+	<?= !Yii::$app->user->isGuest && 
+	    (Yii::$app->user->id == $model->creatoruserid  || User::findIdentity(Yii::$app->user->id)->thelogin == "admin")
+		? Html::a("Update",Url::toRoute(['view', 'id' => $model->id])) : "" ?> 
     </div>
 </article>
