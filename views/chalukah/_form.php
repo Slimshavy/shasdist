@@ -11,11 +11,6 @@ use yii\jui\DatePicker;
 
 <div class="distribution-profile-form">
 
-<<<<<<< HEAD
-=======
-    <?= DatePicker::widget(['model'=>$model,'attribute'=>'endtime','clientOptions'=>['dateFormat'=>'Y-m-d']]) ?>
->>>>>>> d709df278764298ea7002a00d0bc901e826bcb03
-
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'profilename')->textInput(['maxlength' => true])->label('Unique Profile Name (leave empty to get default identifier)') ?>
