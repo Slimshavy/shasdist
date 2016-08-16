@@ -44,9 +44,10 @@ class DistributionProfile extends \yii\db\ActiveRecord
         return [
             [['header', 'description', 'starttime', 'endtime'], 'required'],
 	    [['profilename'],'match', 'pattern' => '/^[a-zA-Z0-9-]*$/','message' => "Please use valid charchters. (e.g. 'my-chalukas-shas')"],
-            [['starttime', 'endtime', 'actualendtime', 'createdate', 'lastupdatedate','ispublic'], 'safe'],
+            [['starttime', 'endtime'], 'date'],
+            [['actualendtime', 'createdate', 'lastupdatedate'], 'safe'],
             [['multiplier', 'creatoruserid', 'lastupdateuserid'], 'integer'],
-            [['finishbeforemultiplying', 'requireconfirmation'], 'boolean'],
+            [['finishbeforemultiplying', 'requireconfirmation','ispublic'], 'boolean'],
             [['profilename', 'header', 'profilephoto'], 'string', 'max' => 128],
             [['description'], 'string', 'max' => 1000],
             [['profilename'], 'unique']
@@ -114,9 +115,6 @@ class DistributionProfile extends \yii\db\ActiveRecord
 		$this->multiplier = 1;
 		if(!isset($this->profilename) || empty($this->profilename))
 		    $this->profilename = Yii::$app->getSecurity()->generateRandomString(10);
-
-		//if(!isset($this->multiplier) || empty($this->multiplier))
-		//   $this->multiplier = 1;
             }
             return true;
         }
@@ -126,9 +124,8 @@ class DistributionProfile extends \yii\db\ActiveRecord
     public function afterSave($insert, $changedAttributes)
     {
         parent::afterSave($insert, $changedAttributes);
-        
-	//for ($x = 1; $x <= $this->multiplier; $x++) 
-	if($this->isNewRecord)	
+
+	if($insert)	
 	{
 	    $sql = "INSERT INTO distributionlearners (distributionprofileid, creatoruserid, mesechtaid, createdate, lastupdatedate, lastupdateuserid, completenumber) 
 		(SELECT ".$this->id.",".Yii::$app->user->id.", id, now(), now(), ".Yii::$app->user->id.",1 FROM mesechtos);";

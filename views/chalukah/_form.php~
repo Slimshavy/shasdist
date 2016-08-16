@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\jui\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\DistributionProfile */
@@ -9,6 +10,7 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="distribution-profile-form">
+
 
     <?php $form = ActiveForm::begin(); ?>
 
@@ -18,9 +20,16 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'starttime')->textInput() ?>
-
-    <?= $form->field($model, 'endtime')->textInput() ?>
+    <?= $form->field($model, 'starttime')->textInput()->widget(\yii\jui\DatePicker::classname(), [
+    	'language' => 'en',
+    	'dateFormat' => 'yyyy-MM-dd',
+	'options'=>['class'=>'form-control'],
+	]) ?>
+    
+    <?= $form->field($model, 'endtime')->textInput()->widget(\yii\jui\DatePicker::classname(), [
+    	'language' => 'en',
+    	'dateFormat' => 'yyyy-MM-dd',
+	]) ?>
 
     <?= $form->field($model, 'requireconfirmation')->checkbox() ?>
 
