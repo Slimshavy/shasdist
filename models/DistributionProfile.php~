@@ -45,9 +45,9 @@ class DistributionProfile extends \yii\db\ActiveRecord
             [['header', 'description', 'starttime', 'endtime'], 'required'],
 	    [['profilename'],'match', 'pattern' => '/^[a-zA-Z0-9-]*$/','message' => "Please use valid charchters. (e.g. 'my-chalukas-shas')"],
 <<<<<<< HEAD
-            [['starttime', 'endtime'], 'date'],
+            [['starttime', 'endtime'], 'date', 'format'=>'yyyy-mm-dd'],
 =======
-            [['starttime', 'endtime', 'actualendtime', 'createdate', 'lastupdatedate','ispublic'], 'safe'],
+            [['starttime', 'endtime'], 'date'],
 >>>>>>> d709df278764298ea7002a00d0bc901e826bcb03
             [['actualendtime', 'createdate', 'lastupdatedate'], 'safe'],
             [['multiplier', 'creatoruserid', 'lastupdateuserid'], 'integer'],
