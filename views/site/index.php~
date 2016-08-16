@@ -3,7 +3,6 @@
 /* @var $this yii\web\View */
 
 use yii\helpers\Html;
-$this->title = 'Shas Ditribution';
 ?>
 <div class="site-index">
 
@@ -45,7 +44,7 @@ $this->title = 'Shas Ditribution';
 		for you and your learners to select and track the distribution of your Split A Shas. After registering and logging in, click below to start your own 
                 Split A Shas distribution</p>
 
-                <p><?= Html::a('Create a distribution profile', '/distribution/create',Array('class'=>'btn btn-default')); ?></p>
+                <p><?= Html::a('Create a distribution profile', '/chalukah/create',Array('class'=>'btn btn-default')); ?></p>
             </div>
             <div class="col-lg-6">
                 <h2>Learn a Masechta</h2>
