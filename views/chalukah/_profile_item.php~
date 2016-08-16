@@ -19,7 +19,11 @@ use app\models\User;
 	    <span><b class='profile-end'>End Date: </b><?= date_format(new DateTime($model->endtime),'m/d/Y') ?></span>
 	</div>
 	<?= !Yii::$app->user->isGuest && 
+<<<<<<< HEAD
 	    (Yii::$app->user->id == $model->creatoruserid  || User::findIdentity(Yii::$app->user->id)->thelogin == "admin")
+=======
+	    (Yii::$app->user->id == $model->creatoruserid  || User::model()->findByPk(Yii::$app->user->id)->thelogin == "admin")
+>>>>>>> d709df278764298ea7002a00d0bc901e826bcb03
 		? Html::a("Update",Url::toRoute(['view', 'id' => $model->id])) : "" ?> 
     </div>
 </article>
