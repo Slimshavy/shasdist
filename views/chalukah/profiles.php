@@ -65,7 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
     {
 	color:gray;
 	display:block;
-	padding-bottom:30px;
+	padding-top:30px;
 	height:100%;
     }
     .profile-header a
