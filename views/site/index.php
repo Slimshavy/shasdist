@@ -9,7 +9,7 @@ use yii\helpers\Html;
     <style>
 	body
 	{
-	    background-image: url("images/gemara3.jpg") ; 
+	    background-image: url("/images/gemara3.jpg") ; 
     	    background-repeat: no-repeat;
     	    background-position: center center;
     	    background-attachment: fixed;

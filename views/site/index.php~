@@ -44,7 +44,7 @@ use yii\helpers\Html;
 		for you and your learners to select and track the distribution of your Split A Shas. After registering and logging in, click below to start your own 
                 Split A Shas distribution</p>
 
-                <p><?= Html::a('Create a distribution profile', '/chalukah/create',Array('class'=>'btn btn-default')); ?></p>
+                <p><?= Html::a('Create a distribution profile', '/chalukah/create', Array('class'=>'btn btn-default')); ?></p>
             </div>
             <div class="col-lg-6">
                 <h2>Learn a Masechta</h2>
@@ -53,7 +53,7 @@ use yii\helpers\Html;
 		You can choose from a list of public Split A Shas distributions, or choose from a specific Split A Shas distribution by following the link 
 		provided by your Split A Shas distribution creato.</p>
 
-                <p><?= Html::a('View Split A Shas distributions', '/chalukah/list',Array('class'=>'btn btn-default')); ?></p>
+                <p><?= Html::a('View Split A Shas distributions', '/chalukah/list', Array('class'=>'btn btn-default')); ?></p>
             </div>
         </div>
 
