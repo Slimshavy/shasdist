@@ -10,7 +10,7 @@ $this->title = 'Shas Ditribution';
     <style>
 	body
 	{
-	    background-image: url("images/gemara.jpg") ; 
+	    background-image: url("images/gemara3.jpg") ; 
     	    background-repeat: no-repeat;
     	    background-position: center center;
     	    background-attachment: fixed;

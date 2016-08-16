@@ -3,7 +3,6 @@
 /* @var $this yii\web\View */
 
 use yii\helpers\Html;
-$this->title = 'Shas Ditribution';
 ?>
 <div class="site-index">
 
