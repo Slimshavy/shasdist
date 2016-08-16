@@ -20,10 +20,6 @@ use app\models\User;
 	</div>
 	<?= !Yii::$app->user->isGuest && 
 	    (Yii::$app->user->id == $model->creatoruserid  || User::findIdentity(Yii::$app->user->id)->thelogin == "admin")
-<<<<<<< HEAD
 		? Html::a("View",Url::toRoute(['view', 'id' => $model->id])) : "" ?> 
-=======
-		? Html::a("Update",Url::toRoute(['view', 'id' => $model->id])) : "" ?> 
->>>>>>> d709df278764298ea7002a00d0bc901e826bcb03
     </div>
 </article>
